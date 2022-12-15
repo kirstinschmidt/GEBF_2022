@@ -1,0 +1,415 @@
+---
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    lib_dir: libs
+    seal: false
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+---
+
+name: title
+class: center, middle, hide_logo
+
+```{r, eval=FALSE, echo = F}
+dir.create("style_file")
+```
+
+```{r xaringen-themer, echo=F, warning=FALSE, message=FALSE}
+#install.packages("xaringan")
+#install.packages("xaringanthemer")
+#library(xaringanthemer)
+#style_mono_light(
+#  base_color = "#001c05",
+#  header_font_google = google_font("Times New Roman"),
+#  text_font_google   = google_font("Times New Roman", "300", "300i"),
+#  code_font_google   = google_font("Fira Mono")
+#)
+
+#colors = c(
+#  red = "#f34213",
+#  purple = "#3e2f5b",
+#  orange = "#ff8811",
+#  green = "#136f63"
+#)
+
+library(xaringanthemer)
+library(xaringanExtra)
+library(readxl)
+library(tidyverse)
+library(ggalt)
+library(hrbrthemes)
+library(reactable)
+htmltools::tagList(rmarkdown::html_dependency_font_awesome()) 
+
+extra_css <- list(
+  ".cit"  = list("font-size" = "70%",
+                 "color" = "#6AEE3E90"),
+  ".em05" = list("font-size" ="0.5em"),
+  ".em06" = list("font-size" ="0.6em"),
+  ".em07" = list("font-size" ="0.7em"),
+  ".em08" = list("font-size" ="0.8em"),
+  ".em09" = list("font-size" ="0.9em"),
+  ".em11" = list("font-size" ="1.1em"),
+  ".em12" = list("font-size" ="1.2em"),
+  ".em13" = list("font-size" ="1.3em"),
+  ".em14" = list("font-size" ="1.4em"),
+  ".em15" = list("font-size" ="1.5em"),
+  ".bold" = list("font-weight" = "bold"),
+  ".medium" = list("font-size" = "130%"),
+  ".large" = list("font-size" = "160%"),
+  ".vertmiddle" = list("vertical-align" ="middle"),
+  ".lh15" = list("line-height" =  "1.5"),
+  ".lh16" = list("line-height" =  "1.6"),
+  ".lh18" = list("line-height" =  "1.8"),
+  ".li" = list("line-height" =  "1.5",
+               "font-size" = "160%",
+               "font-weight" = "bold"),
+  ".phgreen" = list("color" = "#50B32E"), 
+  ".phgreenlight" = list("color" = "#8CD000"),
+  ".lightgrey" = list("color" ="#b3b3b3"),
+  ".my-footer" = list("background-color" = "#1a1917",
+                      "position" = "absolute",
+                      "bottom" = "0px",
+                      "left" = "0px",
+                      "height" = "20px",
+                      "width" = "100%"),
+  ".my-footer span" = list("font-size" = "10pt", 
+                           "color" = "#F7F8FA",
+                           "position" = "absolute",
+                           "left" = "15px",
+                           "bottom" = "2px"),
+  ".remark-slide-number" = list("bottom" = "18px"),
+  ".li" = list("line-height" =  "4"),
+  ".scroll-box-18" = list("height" ="18em",
+                           "overflow-y" = "scroll"),
+  ".scroll-box-23" = list("height" ="23em",
+                           "overflow-y" = "scroll"))
+
+style_mono_accent_inverse(
+  #text_color = "#ffffff",
+  base_color           = "#8CD000",
+  white_color = "#FFFFFF",
+  black_color = "#272822",
+  header_font_google   = google_font("Roboto", "700"),
+  text_font_google     = google_font("Roboto", "500"),
+  code_font_google     = google_font("Droid Mono"),
+  extra_css = extra_css#,
+  #inverse_background_color = "#000000"
+  #inverse_text_color = "#ffffff",
+  #link_color = "#6AEE3E"
+)
+
+use_logo(
+  image_url = "https://live.staticflickr.com/65535/50974533397_9ac99f9a48_o.png",
+  width = "180px",
+  position = css_position(top = "1.5em", right = "1.5em")
+)
+
+use_editable(expires = 1)
+```
+
+## .phgreenlight[Wie interpretieren Lehrkräfte verschiedene Beschreibungen wissenschaftlicher Evidenz?]
+<br>
+
+.em13[<u>Kirstin Schmidt</u><sup>1</sup>, <u>Peter Adriaan Edelsbrunner</u><sup>2</sup>, Tom Rosman<sup>3</sup>, Colin Cramer<sup>4</sup> <br> und Samuel Merk<sup>1</sup>]
+
+
+<sup>1</sup> Pädagogische Hochschule Karlsruhe <br>
+<sup>2</sup> ETH Zürich <br>
+<sup>3</sup> Leibniz-Institut für Psychologie <br>
+<sup>4</sup> Eberhard Karls Universität Tübingen<br>
+
+.phgreen[Einzelbeitrag auf der 9.GEBF-Tagung | 09.08.2022]  
+
+---
+
+
+## .phgreenlight[Struktur `r fontawesome::fa_i(name = "list-ul")`]
+* Evidenzinformierte Schulpraxis <i class="fas fa-school"></i>
+* Wissenschaftskommunikation <i class="fas fa-quote-right"></i>
+* Studie zur Kommunikation wissenschaftlicher Evidenz <i class="fas fa-search"></i>
+  * Forschungsfragen <i class="fas fa-question"></i>
+  * Stichprobe `r fontawesome::fa_i(name = "users")`
+  * Design und Materialien `r fontawesome::fa_i(name = "align-left")`
+  * Ergebnisse <i class="far fa-chart-bar"></i>
+  * zusätzliche explorative Analyse `r fontawesome::fa_i(name = "forward")`
+* Diskussion <i class="fab fa-weixin"></i>
+* Referenzen <i class="fas fa-book-open"></i>
+
+
+---
+class: inverse, center, middle
+
+# Evidenzinformierte Schulpraxis <i class="fas fa-school"></i>
+
+---
+## .phgreenlight[Evidenzinformierte Schulpraxis <i class="fas fa-school"></i>]
+* unterschiedliche Arten von Evidenz wie z.B. *.white[Forschungsergebnisse]* beim professionellen Handeln berücksichtigen <br>
+  &rarr; Steigerung von Unterrichtsqualität, Schulqualität und Schüler*innenleistung <br>
+  .em06[.lightgrey[(z.B. Brown et al., 2017; Schildkamp, 2019)]] 
+* Lehrpersonen verfügen oft nur über eingeschränkte Forschungskompetenzen .em06[.lightgrey[(z.B. Pierce & Chick, 2013)]] <br>
+ &rarr; evidenzinformiertes Handeln ist für wissenschaftliche Laien häufig herausfordernd .em06[.lightgrey[(Bromme et al., 2010; Bromme & Goldman, 2014)]]
+* Ansätze, um evidenzinformierte Schulpraxis zu steigern / zu erleichtern:
+  * bildungswissenschaftliche Forschungskompetenz steigern .em06[.lightgrey[(e.g., Borg, 2009; Leat et al., 2015)]]
+  * Wissenschaftskommunikation .em06[.lightgrey[(z.B. Clearing Houses [z.B. Diery et al., 2020])]]
+  
+<!--
+* Umgang mit wissenschaftlicher Evidenz benötigt bildungswissenschaftliche Forschungskompetenz .em06[.lightgrey[(z.B. Groß Ophoff et al., 2014, 2017; Shank & Brown, 2007)]]
+--> 
+
+---
+
+## .phgreenlight[Evidenzinformierte Schulpraxis <i class="fas fa-school"></i>]
+* unterschiedliche Arten von Evidenz wie z.B. *.white[Forschungsergebnisse]* beim professionellen Handeln berücksichtigen <br>
+  &rarr; Steigerung von Unterrichtsqualität, Schulqualität und Schüler*innenleistung <br>
+  .em06[.lightgrey[(z.B. Brown et al., 2017; Schildkamp, 2019)]] 
+* Lehrpersonen verfügen oft nur über eingeschränkte Forschungskompetenzen .em06[.lightgrey[(z.B. Pierce & Chick, 2013)]] <br>
+ &rarr; evidenzinformiertes Handeln ist für wissenschaftliche Laien häufig herausfordernd .em06[.lightgrey[(Bromme et al., 2010; Bromme & Goldman, 2014)]]
+* Ansätze, um evidenzinformierte Schulpraxis zu steigern / zu erleichtern:
+  * bildungswissenschaftliche Forschungskompetenz steigern .em06[.lightgrey[(e.g., Borg, 2009; Leat et al., 2015)]]
+  * .em12[.phgreen[Wissenschaftskommunikation]] .em06[.lightgrey[(z.B. Clearing Houses [z.B. Diery et al., 2020])]]
+
+<!--
+* Umgang mit wissenschaftlicher Evidenz benötigt bildungswissenschaftliche Forschungskompetenz .em06[.lightgrey[(z.B. Groß Ophoff et al., 2014, 2017; Shank & Brown, 2007)]]
+--> 
+
+---
+class: inverse, center, middle
+
+# Wissenschaftskommunikation <i class="fas fa-quote-right"></i>
+
+<!-- Hinweis darauf, dass wissenschaftliche Evidenz vor allem auf quantitative Ergebnisse bezieht --> 
+---
+
+## .phgreenlight[Wissenschaftskommunikation - <br> Auszug aus dem Forschungsstand <i class="fas fa-quote-right"></i>]
+
+<center>.em11[.phgreen[*Forschungsergebnisse werden überwiegend als "statistisch (nicht) signifikante" Ergebnisse kommuniziert (Hanel & Mehler, 2019)*]] </center>
+
+* verschiedene empirisch belegte Fehlkonzepte bezüglich statistischer Signifikanz und p Werten .em06[.lightgrey[(z.B. Haller & Krauss, 2002; Sotos et al.,2007)]] <br>
+  &rarr; alternative Maße z.B. Effektstärken .em06[.lightgrey[(z.B. Coe, 2002; Cumming, 2014)]]
+* standardisierte Leistungstestungen im Schulkontext: Lehrpersonen schätzen u.a. die Effektstärke Month of Progress besonders informativ und verständlich ein, Cohen's *U<sub>3</sub>* hingegen als weniger informativ und verständlich .em06[.lightgrey[(Lortie-Forgues et al., 2021)]] 
+* wissenschaftliche Laien nehmen die gängige Signifikanz-Aussage und Cohen's *U<sub>3</sub>* im Vergleich zu anderen Statistiken (z.B. Cohen's *d*, Bayes Faktoren ) als besonders informativ wahr .em06[.lightgrey[(Hanel & Mehler, 2019)]]
+* statistisch signifikante Effekte werden als große Effekte fehlinterpretiert .em06[.lightgrey[(Goodman, 2008; Sotos et al., 2007)]] <br> &rarr; Annahme allerdings kaum empirisch untersucht .em06[.lightgrey[(erste Ansätze z.B. bei Kühberger et al., 2015; Ostkamp, 2017; Sotos et al., 2009)]] <br>
+&rarr; Zweifel, ob wissenschaftliche Laien zwischen Inferenzsstatistik und Effektstärke unterscheiden können 
+
+
+---
+class: inverse, center, middle
+
+# Studie zur Kommunikation wissenschaftlicher Evidenz <i class="fas fa-search"></i>
+
+---
+
+## .phgreenlight[Forschungsfragen <i class="fas fa-question"></i>]
+.em12[1) Nehmen Lehrpersonen unterschiedliche statistische Beschreibungen unterschiedlich informativ wahr?]
+<br>
+<br>
+<br>
+.em12[2) Wie interpretieren Lehrpersonen unterschiedliche statistische Beschreibungen? Unterscheiden sie bei ihrer Interpretation zwischen Inferenzstatistik und Effektstärke?]
+
+---
+
+## .phgreenlight[Stichprobe `r fontawesome::fa_i(name = "users")`]
+
+* Sampling via Random Digit Dialing durch einen Dienstleister
+* *N* = 414 Lehrpersonen in Deutschland (66,91% weiblich; 94,93% ohne Migrationshintergrund) 
+* *M<sub>Alter</sub>* = 47,70 Jahre (*SD* = 10,82)
+* *M<sub>Lehrtätigkeit</sub>* = 17,37 Jahre (*SD* = 11,13)
+* verschiedene Schularten (z.B. 27,29 % Gymnasiallehrpersonen; 26,09% Grundschullehrpersonen; 18,60 % Gesamtschullehrpersonen)
+* verschiedene Unterrichtsfächer (z.B. 58,45 % unterrichten ein Geistes- oder Sozialwissenschaftliches Fach; 54,83 % mind. eine Sprache; 43,72 % ein mathematisches oder naturwissenschaftliches Fach)
+
+.phgreen[&rarr; Stichprobe kann als annähernd repräsentativ gewertet werden] .em06[.lightgrey[(vgl. DESTATIS, 2020)]]
+
+---
+
+class: inverse, center, middle
+
+# Design und Materialien `r fontawesome::fa_i(name = "align-left")`
+
+---
+class: hide_logo
+background-image: url("images/Figure_1a_GEBF.png")
+background-size: contain
+background-color: white
+<!-- wie kann ich Folienanzahl ausblenden? --> 
+
+
+---
+class: hide_logo
+background-image: url("images/Figure_1b_GEBF.png")
+background-size:contain
+
+---
+
+class: inverse, center, middle
+# Ergebnisse <i class="far fa-chart-bar"></i>
+
+<!-- zunächst einmal deskriptive Ergebnisse anschauen --> 
+---
+
+class: hide_logo
+background-image: url("images/informativity_product_plot.png")
+background-size: contain
+background-color: white
+
+.title-slide .remark-slide-number {
+  display: none;
+}
+
+---
+
+class: hide_logo
+background-image: url("images/interpretation_product_plot.png")
+background-size: contain
+background-color: white
+
+<!-- teachers interpret inferential statistics more as inferential statistics and effect sizes more as effect sizes --> 
+---
+
+
+## .phgreenlight[Konfirmatorische Analyse `r fontawesome::fa_i(name = "check")`]
+* Hypothesen unter https://osf.io/ghskp/ präregistriert <br>
+<br>
+<br>
+.phgreen[Beispiel: Lehrpersonen schätzen die gängige Signifikanz-Aussage, die Beschreibung von Cohen’s *U<sub>3</sub>* und die kombinierte Aussage über Inferenzstatistik und Effektstärke informativer ein als die anderen statistischen Aussagen (p Wert, Bayes Faktor, Cohen’s *d*).]
+<br>
+<br>
+<br>
+* *__.phgreen[Approximate Adjusted Fractional Bayes Factors für informative Hypothesen__*] .phgreen[(Hoijtink et al., 2019)] zeigen u.a. starke Evidenz dafür, dass Lehrpersonen ...
+  + ... die Signifikanz-Aussage, die Beschreibung von Cohen's *U<sub>3</sub>* und die kombinierte Aussage informativer einschätzen als die anderen statistischen Aussagen.
+  
+  <!-- aber im Durchschnitt dennoch nur als etwas informativ --> 
+   <!--  
+  + ... Cohen's *U<sub>3</sub>* im Durchschnitt als Effektstärke interpretieren.
+  + ... die Signifikanz-Aussage im Durchschnitt als Inferenzstatistik *und* als Effektstärke interpretieren.
+    --> 
+    
+  + ... grundsätzlich bei allen statistischen Aussagen nicht zwischen Inferenzstatistik und Effektstärke unterscheiden.
+  
+<!-- hier noch statistische Kennwerte ergänzen? Nee - nur auf Nachfrage ...-->
+
+---
+
+class: hide_logo
+background-image: url("images/interpretation_sign_cou3_product_plot_highlighted.png")
+background-size: contain
+background-color: white
+
+<!-- nur Skalen zur Interpretation als Effektstärke und Inferenzstatistik und vllt. nur Signifikanz und Cohen's U3 -->
+<!-- genauer hinschaut sieht man nicht nur eine große Heterogenität / Varianz, sondern bei Signifikanz als Effektstärke und bei Cohen's U3 als Infstat bimodale Verteilung -> statistische Interpretationsgruppen / - typen --> 
+
+---
+
+class: inverse, center, middle
+
+# Zusätzliche explorative Analyse `r fontawesome::fa_i(name = "forward")`
+
+
+---
+## .phgreenlight[Explorative Untersuchung zu <br> Interpretationstypen `r fontawesome::fa_i(name = "th-large")`]
+
+* Gibt es bei Lehrpersonen individuelle Unterschiede in der Interpretation von statistischer Signifikanz und Cohen's *U<sub>3</sub>*? 
+
+<!-- PART Peter - Latente Profil Analyse für kontinuierliche Variablen, auch LCA durchgeführt, aber keine großen Unterschiede-->
+
+<!--  beste Lösung: 4 Profile ; hohe Entropy-->
+
+<!-- nur kurz darüber informieren, dass wir uns auch Kovariaten zum demografischen Hintergrund, Lehrpersonenhintergrund und Variablen zum Umgang / Interesse / Vertrauen in Wissenschaft angeschaut haben, die aber die Zugehörigkeit zu den Profilen nicht ausreichend erklären -->
+---
+
+class: hide_logo
+background-image: url("images/LatentProfiles.png")
+background-size: contain
+background-color: white
+
+---
+class: inverse, center, middle
+# Diskussion <i class="fab fa-weixin"></i>
+
+---
+
+## .phgreenlight[Diskussion <i class="fab fa-weixin"></i>]
+* Kombination aus .phgreen[Signifikanz-Aussage und Cohen's *U<sub>3</sub>*] könnte zu einer .phgreen[wahrgenommenen informativen, aber nicht automatisch verständlichen Wissenschaftskommunikation] führen <br> &rarr; weitere Forschung zum Thema verständliche Wissenschaftskommunikation z.B. weitere statistische Indikatoren wie natürliche Häufigkeiten .em06[.lightgrey[(z.B. Akl et al., 2011; Gigerenzer & Edwards, 2003)]]
+<br>
+<br>
+* .phgreen[Interpretationen der statistischen Beschreibungen sehr heterogen] <br>
+&rarr; informative und verständliche Wissenschaftskommunikation möglicherweise nicht ausreichend, zusätzlich bildungswissenschaftliche Forschungskompetenz stärken
+<br>
+<br>
+* ABER Heterogenität kann auf .phgreen[vier eindeutige und klar abgrenzbare Profile] reduziert werden<br>
+&rarr; weitere .phgreen[Forschung zu möglichen Kovariaten] (z.B. statistische Kenntnisse) <br>
+&rarr; Interpretationsprofile bei .phgreen[Wissenschaftskommunikation und statistischer Aus- und Fortbildung <br> von (angehenden) Lehrpersonen] berücksichtigen .em06[.lightgrey[(Ansätze aus der Conceptual Change-Forschung z.B. Prinz et al., 2019)]]
+
+  
+<!--  * Visualisierungen von statistischen Indikatoren z.B. Effektstärken .em06[.lightgrey[(z.B. Pierce & Chick, 2013)]] -->
+
+
+<!-- 
+  + explizite Erklärungen oder Hyperlinks zu Erklärungen über statistische Signifikanz und Effektstärke in (digitale) Wissenschaftskommunikation einbauen
+  + Ansätze aus conceptual change-Forschung könnten für die Gestaltung der Aus- und Fortbildung hilfreich sein .em06[.lightgrey[(z.B. Prinz et al., 2019)]]
+  
+  -->
+
+<!-- Natürliche Häufigkeiten könnten eine Möglichkeit sein, da Untersuchungen in Medizin zeigen, dass diese im Vergleich zu Prozentzahlen und Wahrscheinlichkeiten weniger anfällig für Fehlinterpretationen sind (Akl et al., 2011; Gigerenzer & Edwards, 2003) -->
+
+---
+
+## .phgreenlight[Referenzen <i class="fas fa-book-open"></i>]
+
+.em08[
+Akl, E. A., Oxman, A. D., Herrin, J., Vist, G. E., Terrenato, I., Sperati, F., Costiniuk, C., Blank, D., & Schünemann, H. (2011). Using alternative statistical formats for presenting risks and risk reductions. Cochrane Database of Systematic Reviews, 2011(3), Article CD006776. https://doi.org/10.1002/14651858.CD006776.pub2 <br>
+Borg, S. (2009). English language teachers’ conceptions of research. Applied Linguistics, 30(3), 358–388. https://doi.org/10.1093/applin/amp007 <br>
+Bromme, R., & Goldman, S. R. (2014). The public’s bounded understanding of science. Educational Psychologist, 49(2), 59–69. https://doi.org/10.1080/00461520.2014.921572 <br>
+Bromme, R., Kienhues, D., & Porsch, T. (2010). Who knows what and who can we believe? Epistemological beliefs are beliefs about knowledge (mostly) to be attained from others. In L. D. Bendixen & F. C. Feucht (Eds.), Personal epistemology in the classroom (pp. 163–194). Cambridge University Press. https://doi.org/10.1017/CBO9780511691904.006 <br>
+Brown, C., Schildkamp, K., & Hubers, M. D. (2017). Combining the best of two worlds: A conceptual proposal for evidence-informed school improvement. Educational Research, 59(2), 154–172. https://doi.org/10.1080/00131881.2017.1304327 <br>
+Coe, R. (2002, 12-14 September). It’s the effect size, stupid. What effect size is and why it is important [Paper presentation]. British Educational Research Association annual conference 2002, Exeter, UK. <br>
+Cumming, G. (2014). The new statistics: Why and how. Psychological Science, 25(1), 7–29. https://doi.org/10.1177/0956797613504966 <br>
+DESTATIS (2021, 17 September). Allgemeinbildende Schulen – Fachserie 11 Reihe 1 – Schuljahr 2020/2021. https://www.statistischebibliothek.de/mir/receive/DEHeft_mods_00136642 <br>
+Diery, A., Knogler, M., Mazziotti, C., Schneeweiss, A., Hetmanek, A., Holzberger, D., & Seidel, T. (2020). Das Clearing House Unterricht. Ein Service für die Lehrer*innenbildung?! journal für lehrerInnenbildung, 20(2), 42–51. https://doi.org/10.35468/jlb-02-2020_03 <br>
+Gigerenzer, G., & Edwards, A. (2003). Simple tools for understanding risks: From innumeracy to insight. British Medical Journal. https://doi.org/10.1136/bmj.327.7417.741 <br>
+Goodman, S. (2008). A dirty dozen: Twelve p-value misconceptions. Seminars in Hematology, 45(3), 135–140. https://doi.org/10.1053/j.seminhematol.2008.04.003 <br>
+]
+
+---
+
+## .phgreenlight[Referenzen <i class="fas fa-book-open"></i>]
+
+.em08[
+Haller, H., & Krauss, S. (2002). Misinterpretations of significance: A problem students share with their teachers? Methods of Psychological Research, 7(1), 1–20. <br>
+Hanel, P. H., & Mehler, D. M. (2019). Beyond reporting statistical significance: Identifying informative effect sizes to improve scientific communication. Public Understanding of Science, 28(4), 468–485. https://doi.org/10.1177/0963662519834193 <br>
+Hoijtink, H., Mulder, J., van Lissa, C., & Gu, X. (2019). A tutorial on testing hypotheses using the Bayes factor. Psychological Methods, 24(5), 539–556.https://doi.org/10.1037/met0000201 <br>
+Kühberger, A., Fritz, A., Lermer, E., & Scherndl, T. (2015). The significance fallacy in inferential statistics. BMC Research Notes, 8(1), 84. https://doi.org/10.1186/s13104-015-1020-4 <br>
+Leat, D., Reid, A., & Lofthouse, R. (2015). Teachers’ experiences of engagement with and in educational research: What can be learned from teachers’ views? Oxford Review of Education, 41(2), 270–286. https://doi.org/10.1080/03054985.2015.1021193 <br>
+Lortie-Forgues, H., Sio, U. N., & Inglis, M. (2021). How Should Educational Effects Be Communicated to Teachers? Educational Researcher, 50(6), 345–354. https://doi.org/10.3102/0013189X20987856 <br>
+Ostkamp, L. (2017). Understanding the concept of null hypothesis significance testing [Master Thesis, Bielefeld University]. https://osf.io/tc8m4/download <br>
+Pierce, R., & Chick, H. (2013). Workplace statistical literacy for teachers: Interpreting box plots. Mathematics Education Research Journal, 25(2), 189–205. https://doi.org/10.1007/s13394-012-0046-3 <br>
+Prinz, A., Golke, S., & Wittwer, J. (2019). Refutation texts compensate for detrimental effects of misconceptions on comprehension and metacomprehension accuracy and support transfer. Journal of Educational Psychology, 111(6), 957–981. https://doi.org/10.1037/edu0000329 <br>
+Schildkamp, K. (2019). Data-based decision-making for school improvement: Research insights and gaps. Educational Research, 61(3), 257–273. https://doi.org/10.1080/00131881.2019.1625716 <br>
+Sotos, A. E. C., Vanhoof, S., Van den Noortgate, W., & Onghena, P. (2009). How confident are students in their misconceptions about hypothesis tests? Journal of Statistics Education, 17(2), 2. https://doi.org/10.1080/10691898.2009.11889514
+]
+---
+class: inverse, center, middle
+
+# Vielen Dank für Ihre Aufmerksamkeit!
+Kontakte `r fontawesome::fa_i(name = "address-card")`:
+.pull-left[
+Kirstin Schmidt <br>
+Pädagogische Hochschule Karlsruhe <br>
+Bismarckstraße 10, <br>
+76133 Karlsruhe <br>
+Deutschland <br>
+.white[kirstin.schmidt@ph-karlsruhe.de] 
+] 
+
+.pull-right[
+Peter Adriaan Edelsbrunner <br>
+ETH Zürich <br>
+Clausiusstrasse 59, <br>
+8092 Zürich <br>
+Schweiz <br>
+.white[peter.edelsbrunner@ifv.gess.ethz.ch] 
+]
